@@ -1,9 +1,29 @@
 package br.com.supermercado.api.models;
 
+import javax.persistence.*;
+
+@Table(name = "produtos")
+@Entity
 public class Produto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "produto_id")
+    private Long id;
+
+    @Column(name = "produto_nome")
     private String nome;
+
+    @Column(name = "produto_preco")
     private Double preco;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

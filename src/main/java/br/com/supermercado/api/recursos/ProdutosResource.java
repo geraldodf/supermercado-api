@@ -1,21 +1,28 @@
 package br.com.supermercado.api.recursos;
 
+import br.com.supermercado.api.daos.ProdutosDAO;
 import br.com.supermercado.api.models.Produto;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 
 @Path("/produtos")
 public class ProdutosResource {
 
+    ProdutosDAO produtosDAO = new ProdutosDAO();
+    
     @GET
-    public String pegarTodosProdutos() {
-        return "Pegar todos os produtos";
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Produto> pegarTodosProdutos() {
+        return produtosDAO.pegarTodosOsProdutos();
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{idDoProduto}")
-    public String pegarUmProduto(@PathParam("idDoProduto") Long idDoProduto) {
-        return "Pegar produto, id do produto: " + idDoProduto;
+    public Produto pegarUmProduto(@PathParam("idDoProduto") Long idDoProduto) {
+       return produtosDAO.pegarUmProduto(idDoProduto);
     }
 
     @POST
