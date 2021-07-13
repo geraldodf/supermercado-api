@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ProdutosResource {
 
     ProdutosDAO produtosDAO = new ProdutosDAO();
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Produto> pegarTodosProdutos() {
@@ -22,24 +22,24 @@ public class ProdutosResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{idDoProduto}")
     public Produto pegarUmProduto(@PathParam("idDoProduto") Long idDoProduto) {
-       return produtosDAO.pegarUmProduto(idDoProduto);
+        return produtosDAO.pegarUmProduto(idDoProduto);
     }
 
     @POST
-    public String criarUmProduto(Produto produto){
-        return "Produto criado, ID: " + produto.getNome();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Produto criarUmProduto(Produto produto) throws Exception {
+        return produtosDAO.criarUmProduto(produto);
     }
 
     @PUT
     @Path("/{idDoProduto}")
-    public String atualizarUmProduto( @PathParam("idDoProduto") Long idDoProduto ,Produto produto){
+    public String atualizarUmProduto(@PathParam("idDoProduto") Long idDoProduto, Produto produto) {
         return "Produto atualizado, ID: " + idDoProduto + " Nome do produto " + produto.getNome() + " com o valor de: R$" + produto.getPreco();
     }
 
     @DELETE
     @Path("/{idDoProduto}")
-    public  String excluirUmProduto(@PathParam("idDoProduto") Long idDoProduto){
+    public String excluirUmProduto(@PathParam("idDoProduto") Long idDoProduto) {
         return "Produto excluido! ID: " + idDoProduto;
     }
-
 }
