@@ -33,13 +33,14 @@ public class ProdutosResource {
 
     @PUT
     @Path("/{idDoProduto}")
-    public String atualizarUmProduto(@PathParam("idDoProduto") Long idDoProduto, Produto produto) {
-        return "Produto atualizado, ID: " + idDoProduto + " Nome do produto " + produto.getNome() + " com o valor de: R$" + produto.getPreco();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Produto atualizarUmProduto(@PathParam("idDoProduto") Long idDoProduto, Produto produto) {
+        return produtosDAO.atualizarUmProduto(idDoProduto, produto);
     }
 
     @DELETE
     @Path("/{idDoProduto}")
-    public String excluirUmProduto(@PathParam("idDoProduto") Long idDoProduto) {
-        return "Produto excluido! ID: " + idDoProduto;
+    public void excluirUmProduto(@PathParam("idDoProduto") Long idDoProduto) throws Exception {
+            produtosDAO.excluirUmProduto(idDoProduto);
     }
 }

@@ -29,9 +29,35 @@ public class ProdutosDAO {
             if (produto.getNome() == null) throw new Exception();
             entityManager.getTransaction().commit();
             return produto;
-        } catch (Exception e){
+        } catch (Exception e) {
             entityManager.getTransaction().rollback();
-            throw new Exception("O produto não pode ser cadastrado sem um nome.");
+            throw new Exception(e.getMessage());
+        }
+
+    }
+
+
+    public Produto atualizarUmProduto(Long idDoProduto, Produto produto) {
+        entityManager.getTransaction().begin();
+        Produto produtoEncontrado = entityManager.find(Produto.class, idDoProduto);
+        if (produto.getNome() != null) {
+            produtoEncontrado.setNome(produto.getNome());
+        }
+        if (produto.getPreco() != null) {
+            produtoEncontrado.setPreco(produto.getPreco());
+        }
+        entityManager.merge(produtoEncontrado);
+        entityManager.getTransaction().commit();
+        return produtoEncontrado;
+    }
+
+    public void excluirUmProduto(Long idDoProduto) throws Exception {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(entityManager.find(Produto.class, idDoProduto));
+            entityManager.getTransaction().commit();
+        } catch (IllegalArgumentException e) {
+            throw new Exception("Produto não existente, numero do produto:" + idDoProduto);
         }
 
     }
