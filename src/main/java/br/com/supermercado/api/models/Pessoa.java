@@ -1,23 +1,21 @@
 package br.com.supermercado.api.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
-@Table(name = "produtos")
+@Table(name = "pessoas")
 @Entity
-public class Produto {
+public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "produto_id")
+    @Column(name = "pessoa_id")
     private Long id;
 
-    @Column(name = "produto_nome")
+    @Column(name = "pessoa_nome")
     private String nome;
 
-    @NotNull(message = "Preco do produto nao pode ser null")
-    @Column(name = "produto_preco")
-    private Double preco;
+    @Column(name = "pessoa_cpf")
+    private Long cpf;
 
     public Long getId() {
         return id;
@@ -35,11 +33,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public Double getPreco() {
-        return preco;
+    public Long getCpf() {
+        return cpf;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
+    public void setCpf(Long cpf) {
+        this.cpf = cpf;
     }
 }

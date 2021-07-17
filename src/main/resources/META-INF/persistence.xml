@@ -7,17 +7,20 @@
     <persistence-unit name="supermercadoPU" transaction-type="RESOURCE_LOCAL">
 
         <class>br.com.supermercado.api.models.Produto</class>
+        <class>br.com.supermercado.api.models.Pessoa</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/supermercadodb?serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost/supermercadodb?serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="admin"/>
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="false"/>
-            <property name="hibernate.hbm2ddl.auto" value="none"/>
+            <!--none, update, create, create-drop -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
     </persistence-unit>
 </persistence>
