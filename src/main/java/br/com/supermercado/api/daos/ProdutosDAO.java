@@ -36,10 +36,12 @@ public class ProdutosDAO {
 
     }
 
-
-    public Produto atualizarUmProduto(Long idDoProduto, Produto produto) {
-        entityManager.getTransaction().begin();
+    public Produto atualizarUmProduto(Long idDoProduto, Produto produto) throws Exception {
         Produto produtoEncontrado = entityManager.find(Produto.class, idDoProduto);
+        if (produtoEncontrado == null){
+            throw new Exception();
+        }
+        entityManager.getTransaction().begin();
         if (produto.getNome() != null) {
             produtoEncontrado.setNome(produto.getNome());
         }
@@ -52,14 +54,13 @@ public class ProdutosDAO {
     }
 
     public void excluirUmProduto(Long idDoProduto) throws Exception {
-        try {
+            Produto produtoParaExcluido = entityManager.find(Produto.class, idDoProduto);
+            if (produtoParaExcluido == null){
+                throw new Exception();
+            }
             entityManager.getTransaction().begin();
-            entityManager.remove(entityManager.find(Produto.class, idDoProduto));
+            entityManager.remove(produtoParaExcluido);
             entityManager.getTransaction().commit();
-        } catch (IllegalArgumentException e) {
-            throw new Exception("Produto não existente, numero do produto:" + idDoProduto);
-        }
-
     }
 
 }
