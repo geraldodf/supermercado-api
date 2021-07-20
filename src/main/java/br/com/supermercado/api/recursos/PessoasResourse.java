@@ -1,8 +1,9 @@
 package br.com.supermercado.api.recursos;
 
 
-import br.com.supermercado.api.daos.PessoasDAO;
 import br.com.supermercado.api.models.Pessoa;
+import br.com.supermercado.api.services.PessoasService;
+import br.com.supermercado.api.services.ProdutosService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,20 +15,25 @@ import java.util.ArrayList;
 public class PessoasResourse {
 
     @Inject
-    PessoasDAO pessoasDAO;
+    PessoasService pessoasServices;
 
     @POST
     public Pessoa criarUmaPessoa(Pessoa pessoa){
-        return pessoasDAO.adicionarUmaPessoa(pessoa);
+        return pessoasServices.adicionarUmaPessoa(pessoa);
     }
+//
+//    @GET
+//    public ArrayList<Pessoa> pegarTodasPessoas(){
+//        return pessoasDAO.pegarTodasPessoas();
+//    }
+//
+//    @GET
+//    public Pessoa pegarUmaPessoa(Long id){
+//        return pessoasDAO.pegarUmaPessoa(id);
+//    }
 
-    @GET
-    public ArrayList<Pessoa> pegarTodasPessoas(){
-        return pessoasDAO.pegarTodasPessoas();
-    }
+//    @PUT
+    //public Pessoa AtualizarUmaPessoa (Long id){ return pessoasServices.}
 
-    @GET
-    public Pessoa pegarUmaPessoa(Long id){
-        return pessoasDAO.pegarUmaPessoa(id);
-    }
+    //@DELETE Pessoa excluirUmaPessoa (Long id){return pessoasServices.}
 }

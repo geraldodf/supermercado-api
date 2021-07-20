@@ -1,8 +1,7 @@
 package br.com.supermercado.api.recursos;
 
-import br.com.supermercado.api.daos.ProdutosDAO;
 import br.com.supermercado.api.models.Produto;
-import br.com.supermercado.api.services.ProdutosServices;
+import br.com.supermercado.api.services.ProdutosService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,34 +13,34 @@ import java.util.ArrayList;
 public class ProdutosResource {
 
     @Inject
-    ProdutosServices produtosServices;
+    ProdutosService produtosService;
 
 
     @GET
     public ArrayList<Produto> pegarTodosProdutos() {
-        return produtosServices.pegarTodosOsProdutos();
+        return produtosService.pegarTodosOsProdutos();
     }
 
     @GET
     @Path("/{idDoProduto}")
     public Produto pegarUmProduto(@PathParam("idDoProduto") Long idDoProduto) {
-        return produtosServices.pegarUmProduto(idDoProduto);
+        return produtosService.pegarUmProduto(idDoProduto);
     }
 
     @POST
     public Produto criarUmProduto(Produto produto) throws Exception {
-        return produtosServices.criarUmProduto(produto);
+        return produtosService.criarUmProduto(produto);
     }
 
     @PUT
     @Path("/{idDoProduto}")
     public Produto atualizarUmProduto(@PathParam("idDoProduto") Long idDoProduto, Produto produto) throws Exception {
-        return produtosServices.atualizarUmProduto(idDoProduto, produto);
+        return produtosService.atualizarUmProduto(idDoProduto, produto);
     }
 
     @DELETE
     @Path("/{idDoProduto}")
     public void excluirUmProduto(@PathParam("idDoProduto") Long idDoProduto) throws Exception {
-            produtosServices.excluirUmProduto(idDoProduto);
+            produtosService.excluirUmProduto(idDoProduto);
     }
 }

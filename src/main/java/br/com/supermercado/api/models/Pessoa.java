@@ -1,6 +1,8 @@
 package br.com.supermercado.api.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "pessoas")
 @Entity
@@ -17,8 +19,20 @@ public class Pessoa {
     @Column(name = "pessoa_cpf")
     private Long cpf;
 
+    @OneToMany(mappedBy = "pessoa")
+    private List<Venda> venda;
+
     public Long getId() {
         return id;
+    }
+
+
+    public List<Venda> getVenda() {
+        return venda;
+    }
+
+    public void setVenda(List<Venda> venda) {
+        this.venda = venda;
     }
 
     public void setId(Long id) {

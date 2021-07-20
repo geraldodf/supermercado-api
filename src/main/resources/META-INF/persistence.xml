@@ -8,6 +8,7 @@
 
         <class>br.com.supermercado.api.models.Produto</class>
         <class>br.com.supermercado.api.models.Pessoa</class>
+        <class>br.com.supermercado.api.models.Venda</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
