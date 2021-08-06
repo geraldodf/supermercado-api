@@ -14,7 +14,7 @@ public class PessoasDAO {
 
 
     public ArrayList<Pessoa> pegarTodasPessoas() {
-        ArrayList<Pessoa> listaDePessoas = (ArrayList<Pessoa>) entityManager.createQuery("From pessoa").getResultList();
+        ArrayList<Pessoa> listaDePessoas = (ArrayList<Pessoa>) entityManager.createQuery("From Pessoa").getResultList();
         return listaDePessoas;
 
     }
@@ -39,9 +39,17 @@ public class PessoasDAO {
         return pessoa;
     }
 
-    public Pessoa atualizarUmaPessoa(Pessoa pessoa) {
-        return null;
+    public void atualizarUmaPessoa( Pessoa pessoa) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(pessoa);
+        entityManager.getTransaction().commit();
     }
 
 
+    public void excluirUmaPessoa(Long id) {
+        Pessoa pessoaExcluir = entityManager.find(Pessoa.class, id);
+        entityManager.getTransaction().begin();
+        entityManager.remove(pessoaExcluir);
+        entityManager.getTransaction().commit();
+    }
 }

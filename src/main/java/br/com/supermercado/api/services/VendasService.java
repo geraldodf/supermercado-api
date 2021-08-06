@@ -11,7 +11,7 @@ public class VendasService {
     @Inject
     VendasDAO vendasDAO;
 
-    public Venda criandoUmaVenda(Venda venda,Long idDoComprador){
+    public Venda criandoUmaVenda(Venda venda, Long idDoComprador){
         vendasDAO.criarUmaVenda(venda, idDoComprador);
         return venda;
     }

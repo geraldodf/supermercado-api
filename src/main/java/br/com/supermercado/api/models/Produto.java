@@ -1,10 +1,9 @@
 package br.com.supermercado.api.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
-@Table(name = "produtos")
 @Entity
+@Table(name = "produtos")
 public class Produto {
 
     @Id
@@ -15,9 +14,8 @@ public class Produto {
     @Column(name = "produto_nome")
     private String nome;
 
-    @NotNull(message = "Preco do produto nao pode ser null")
     @Column(name = "produto_preco")
-    private Double preco;
+    private Long preco;
 
     public Long getId() {
         return id;
@@ -35,11 +33,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public Double getPreco() {
+    public Long getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(Long preco) {
         this.preco = preco;
     }
 }

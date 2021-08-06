@@ -1,7 +1,6 @@
 package br.com.supermercado.api.recursos;
 
 
-import br.com.supermercado.api.models.Pessoa;
 import br.com.supermercado.api.models.Venda;
 import br.com.supermercado.api.services.VendasService;
 

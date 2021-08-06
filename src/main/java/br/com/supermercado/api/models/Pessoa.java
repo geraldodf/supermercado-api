@@ -1,11 +1,11 @@
 package br.com.supermercado.api.models;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "pessoas")
 @Entity
+@Table(name = "pessoas")
 public class Pessoa {
 
     @Id
@@ -22,17 +22,16 @@ public class Pessoa {
     @OneToMany(mappedBy = "pessoa")
     private List<Venda> venda;
 
-    public Long getId() {
-        return id;
-    }
-
-
     public List<Venda> getVenda() {
         return venda;
     }
 
     public void setVenda(List<Venda> venda) {
         this.venda = venda;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {

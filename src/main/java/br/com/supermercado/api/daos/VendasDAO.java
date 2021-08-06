@@ -3,7 +3,6 @@ package br.com.supermercado.api.daos;
 import br.com.supermercado.api.models.Pessoa;
 import br.com.supermercado.api.models.Venda;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
