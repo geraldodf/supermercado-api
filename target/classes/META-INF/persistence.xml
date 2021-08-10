@@ -9,6 +9,8 @@
         <class>br.com.supermercado.api.models.Produto</class>
         <class>br.com.supermercado.api.models.Pessoa</class>
         <class>br.com.supermercado.api.models.Venda</class>
+        <class>br.com.supermercado.api.models.TipoPagamento</class>
+        <class>br.com.supermercado.api.models.Pagamento</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
@@ -21,7 +23,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="false"/>
             <!--none, update, create, create-drop -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
         </properties>
     </persistence-unit>
 </persistence>

@@ -1,9 +1,14 @@
 package br.com.supermercado.api.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "vendas")
 public class Venda {
@@ -25,37 +30,10 @@ public class Venda {
     @JoinTable(name = "relacao_vendas_produtos", joinColumns = @JoinColumn(name = "venda_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Produto> produto;
 
-    public List<Produto> getProduto() {
-        return produto;
-    }
+    @OneToOne
+    @JoinColumn(name = "pagamentofk")
+    private Pagamento pagamento;
 
-    public void setProduto(List<Produto> produto) {
-        this.produto = produto;
-    }
-
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
 
 
 }

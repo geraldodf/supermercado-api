@@ -1,7 +1,12 @@
 package br.com.supermercado.api.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "produtos")
 public class Produto {
@@ -15,29 +20,7 @@ public class Produto {
     private String nome;
 
     @Column(name = "produto_preco")
-    private Long preco;
+    private Double preco;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Long getPreco() {
-        return preco;
-    }
-
-    public void setPreco(Long preco) {
-        this.preco = preco;
-    }
 }
