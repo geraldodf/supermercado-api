@@ -32,5 +32,17 @@ public class TipoPagamentoResource {
         return tipoPagamentosService.pegarUmTipoDePagamento(id);
     }
 
+    @PUT
+    @Path("/{id}")
+    public void atualizarUmTipoPagamento(@PathParam("id") Long id ,TipoPagamento tipoPagamento){
+        tipoPagamentosService.atualizarUmTipoPagamento(id, tipoPagamento);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void excluirUmTipoPagamento(@PathParam("id") Long id){
+        tipoPagamentosService.excluirUmTipoPagamento(id);
+    }
+
 
 }

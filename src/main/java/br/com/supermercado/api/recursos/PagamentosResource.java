@@ -5,10 +5,7 @@ import br.com.supermercado.api.models.Pagamento;
 import br.com.supermercado.api.services.PagamentosService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -25,7 +22,27 @@ public class PagamentosResource {
     }
 
     @POST
-    public void criarUmPagamento(CriacaoPagamentoDTO criacaoPagamentoDTO){
+    public void criarUmPagamento(CriacaoPagamentoDTO criacaoPagamentoDTO) {
         pagamentosService.criarUmPagamento(criacaoPagamentoDTO);
     }
+
+    @GET
+    @Path("/{id}")
+    public Pagamento pegarUmPagamento(@PathParam("id") Long id) {
+        return pagamentosService.pegarUmPagamento(id);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void excluirUmPagamento(@PathParam("id") Long id) {
+        pagamentosService.excluirUmPagamento(id);
+    }
+
+    @PUT
+    @Path("/{id}")
+    public void atualizarUmPagamento(@PathParam("id")Long id, Pagamento pagamento ){
+        pagamentosService.atualizarUmPagamento();
+    }
+
+
 }

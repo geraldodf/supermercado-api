@@ -1,6 +1,7 @@
 package br.com.supermercado.api.recursos;
 
 
+import br.com.supermercado.api.dtos.CriacaoVendaDTO;
 import br.com.supermercado.api.models.Venda;
 import br.com.supermercado.api.services.VendasService;
 
@@ -17,10 +18,10 @@ public class VendasResource {
 
 
     @POST
-    @Path("/comprador/{idDoComprador}")
-    public Venda criandoUmaVenda(@PathParam("idDoComprador")Long idDoComprador, Venda venda) {
-        vendasService.criandoUmaVenda(venda, idDoComprador);
-        return venda;
+    @Path
+    public void criandoUmaVenda(CriacaoVendaDTO criacaoVendaDTO) {
+        vendasService.criandoUmaVenda(criacaoVendaDTO);
+
     }
 
 

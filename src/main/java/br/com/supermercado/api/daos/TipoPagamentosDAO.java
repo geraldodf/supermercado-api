@@ -27,4 +27,18 @@ public class TipoPagamentosDAO {
     public TipoPagamento pegarUmTipoDePagamento(Long id) {
         return entityManager.find(TipoPagamento.class, id);
     }
+
+    public void atualizarUmTipoPagamento(Long id, TipoPagamento tipoPagamento) {
+        TipoPagamento retorno = entityManager.find(TipoPagamento.class, id);
+        retorno.setNomeTipoPagamento(tipoPagamento.getNomeTipoPagamento());
+        entityManager.getTransaction().begin();
+        entityManager.merge(retorno);
+        entityManager.getTransaction().commit();
+    }
+
+    public void excluirUmTipoPagamento(Long id) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(entityManager.find(TipoPagamento.class, id));
+        entityManager.getTransaction().commit();
+    }
 }

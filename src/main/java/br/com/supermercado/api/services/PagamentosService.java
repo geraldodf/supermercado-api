@@ -28,10 +28,18 @@ public class PagamentosService {
         pagamento.setPrecoAPagar(criacaoPagamentoDTO.getPrecoAPagar());
 
         ArrayList<TipoPagamento> tipoPagamentos = new ArrayList<>();
-        for (int i = 0; i < criacaoPagamentoDTO.getListaIdTipoPagamento().size(); i++ ){
+        for (int i = 0; i < criacaoPagamentoDTO.getListaIdTipoPagamento().size(); i++) {
             tipoPagamentos.add(tipoPagamentosDAO.pegarUmTipoDePagamento(criacaoPagamentoDTO.getListaIdTipoPagamento().get(i)));
         }
         pagamento.setTipoPagamento(tipoPagamentos);
         pagamentosDAO.criarUmPagamento(pagamento);
+    }
+
+    public Pagamento pegarUmPagamento(Long id) {
+        return pagamentosDAO.pegarUmPagamento(id);
+    }
+
+    public void excluirUmPagamento(Long id) {
+        pagamentosDAO.excluirUmPagamento(id);
     }
 }

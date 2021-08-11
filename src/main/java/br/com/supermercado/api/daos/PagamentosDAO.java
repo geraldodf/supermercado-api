@@ -14,8 +14,8 @@ public class PagamentosDAO {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 
-    public List<Pagamento> pegarTodosPagamentos(){
-        return (ArrayList<Pagamento>)entityManager.createQuery("From Pagamento").getResultList();
+    public List<Pagamento> pegarTodosPagamentos() {
+        return (ArrayList<Pagamento>) entityManager.createQuery("From Pagamento").getResultList();
     }
 
     public void criarUmPagamento(Pagamento pagamento) {
@@ -23,5 +23,15 @@ public class PagamentosDAO {
         entityManager.persist(pagamento);
         entityManager.getTransaction().commit();
 
+    }
+
+    public Pagamento pegarUmPagamento(Long id) {
+        return entityManager.find(Pagamento.class, id);
+    }
+
+    public void excluirUmPagamento(Long id) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(entityManager.find(Pagamento.class, id));
+        entityManager.getTransaction().commit();
     }
 }

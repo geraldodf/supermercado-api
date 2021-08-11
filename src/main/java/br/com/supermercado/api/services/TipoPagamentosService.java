@@ -22,4 +22,12 @@ public class TipoPagamentosService {
     public TipoPagamento pegarUmTipoDePagamento(Long id) {
        return tipoPagamentosDAO.pegarUmTipoDePagamento(id);
     }
+
+    public void atualizarUmTipoPagamento(Long id, TipoPagamento tipoPagamento) {
+        tipoPagamentosDAO.atualizarUmTipoPagamento(id, tipoPagamento);
+    }
+
+    public void excluirUmTipoPagamento(Long id) {
+        tipoPagamentosDAO.excluirUmTipoPagamento(id);
+    }
 }

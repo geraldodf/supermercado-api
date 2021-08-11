@@ -1,11 +1,14 @@
 package br.com.supermercado.api.daos;
 
+import br.com.supermercado.api.dtos.CriacaoVendaDTO;
 import br.com.supermercado.api.models.Pessoa;
+import br.com.supermercado.api.models.Produto;
 import br.com.supermercado.api.models.Venda;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
 
 public class VendasDAO {
 
@@ -13,13 +16,10 @@ public class VendasDAO {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 
-    public Venda criarUmaVenda(Venda venda, Long idDoComprador){
-        Pessoa comprador = entityManager.find(Pessoa.class, idDoComprador);
+    public void criarUmaVenda(Venda venda){
         entityManager.getTransaction().begin();
-        venda.setPessoa(comprador);
         entityManager.persist(venda);
         entityManager.getTransaction().commit();
-        return venda;
     }
 
     public Pessoa atualizarComprador (Pessoa pessoa, Long id){
