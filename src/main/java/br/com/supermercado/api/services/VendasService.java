@@ -1,15 +1,15 @@
 package br.com.supermercado.api.services;
 
+import br.com.supermercado.api.daos.PagamentosDAO;
 import br.com.supermercado.api.daos.PessoasDAO;
 import br.com.supermercado.api.daos.ProdutosDAO;
 import br.com.supermercado.api.daos.VendasDAO;
 import br.com.supermercado.api.dtos.CriacaoVendaDTO;
+import br.com.supermercado.api.dtos.RelacaoVendaPagamentoDTO;
+import br.com.supermercado.api.models.Pagamento;
 import br.com.supermercado.api.models.Pessoa;
 import br.com.supermercado.api.models.Produto;
 import br.com.supermercado.api.models.Venda;
-import br.com.supermercado.api.recursos.PagamentosResource;
-import br.com.supermercado.api.recursos.ProdutosResource;
-import br.com.supermercado.api.recursos.TipoPagamentoResource;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -23,6 +23,8 @@ public class VendasService {
     private ProdutosDAO produtosDAO;
     @Inject
     private PessoasDAO pessoasDAO;
+    @Inject
+    private PagamentosDAO pagamentosDAO;
 
     public void criandoUmaVenda(CriacaoVendaDTO criacaoVendaDTO) {
         Venda venda = new Venda();
@@ -41,5 +43,19 @@ public class VendasService {
 
     public Pessoa atualizandoComprador(Pessoa pessoa, Long id) {
         return vendasDAO.atualizarComprador(pessoa, id);
+    }
+
+
+    public void inserirUmPagamento(RelacaoVendaPagamentoDTO relacaoVendaPagamentoDTO) {
+        Pagamento pagamento = new Pagamento();
+        Venda venda = new Venda();
+        pagamento = pagamentosDAO.pegarUmPagamento(relacaoVendaPagamentoDTO.getIdDoPagamento());
+        venda = vendasDAO.pegarUmaVenda(relacaoVendaPagamentoDTO.getIdDaVenda());
+        venda.setPagamento(vendasDAO.inserirUmPagamento(pagamento));
+
+    }
+
+    public void pegarUmaVenda(Long id) {
+        vendasDAO.pegarUmaVenda(id);
     }
 }

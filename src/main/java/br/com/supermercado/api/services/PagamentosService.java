@@ -42,4 +42,7 @@ public class PagamentosService {
     public void excluirUmPagamento(Long id) {
         pagamentosDAO.excluirUmPagamento(id);
     }
+
+    public void atualizarUmPagamento(Long id) {
+    }
 }

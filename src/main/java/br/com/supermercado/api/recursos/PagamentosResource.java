@@ -41,7 +41,7 @@ public class PagamentosResource {
     @PUT
     @Path("/{id}")
     public void atualizarUmPagamento(@PathParam("id")Long id, Pagamento pagamento ){
-        pagamentosService.atualizarUmPagamento();
+        pagamentosService.atualizarUmPagamento(id);
     }
 
 

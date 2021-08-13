@@ -1,6 +1,7 @@
 package br.com.supermercado.api.daos;
 
 import br.com.supermercado.api.dtos.CriacaoVendaDTO;
+import br.com.supermercado.api.models.Pagamento;
 import br.com.supermercado.api.models.Pessoa;
 import br.com.supermercado.api.models.Produto;
 import br.com.supermercado.api.models.Venda;
@@ -28,5 +29,15 @@ public class VendasDAO {
         entityManager.merge(compradorEncontrado);
         entityManager.getTransaction().commit();
         return pessoa;
+    }
+
+    public void inserirUmPagamento(Pagamento pagamento) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(pagamento);
+        entityManager.getTransaction().commit();
+    }
+
+    public Venda pegarUmaVenda(Long id) {
+        return entityManager.find(Venda.class, id);
     }
 }
