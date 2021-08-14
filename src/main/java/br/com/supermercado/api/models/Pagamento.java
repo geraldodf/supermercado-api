@@ -17,7 +17,7 @@ public class Pagamento {
     @Column(name = "id_pagamento")
     private int idPagamento;
 
-    @Column(name = "data_pagaento")
+    @Column(name = "data_pagamento")
     private String dataPagamento;
 
     @Column(name = "preco_a_pagar")

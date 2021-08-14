@@ -51,11 +51,15 @@ public class VendasService {
         Venda venda = new Venda();
         pagamento = pagamentosDAO.pegarUmPagamento(relacaoVendaPagamentoDTO.getIdDoPagamento());
         venda = vendasDAO.pegarUmaVenda(relacaoVendaPagamentoDTO.getIdDaVenda());
-        venda.setPagamento(vendasDAO.inserirUmPagamento(pagamento));
+        venda.setPagamento(pagamento);
 
     }
 
-    public void pegarUmaVenda(Long id) {
-        vendasDAO.pegarUmaVenda(id);
+    public Venda pegarUmaVenda(Long id) {
+        return vendasDAO.pegarUmaVenda(id);
+    }
+
+    public List<Venda> pegarTodasVendas() {
+        return vendasDAO.pegarTodasVendas();
     }
 }
