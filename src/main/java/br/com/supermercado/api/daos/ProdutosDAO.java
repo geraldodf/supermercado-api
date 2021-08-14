@@ -32,13 +32,15 @@ public class ProdutosDAO {
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
             throw new Exception(e.getMessage());
+        } finally {
+            entityManager.close();
         }
 
     }
 
     public Produto atualizarUmProduto(Long idDoProduto, Produto produto) throws Exception {
         Produto produtoEncontrado = entityManager.find(Produto.class, idDoProduto);
-        if (produtoEncontrado == null){
+        if (produtoEncontrado == null) {
             throw new Exception();
         }
         entityManager.getTransaction().begin();
@@ -50,17 +52,20 @@ public class ProdutosDAO {
         }
         entityManager.merge(produtoEncontrado);
         entityManager.getTransaction().commit();
+        entityManager.close();
         return produtoEncontrado;
+
     }
 
     public void excluirUmProduto(Long idDoProduto) throws Exception {
-            Produto produtoParaExcluido = entityManager.find(Produto.class, idDoProduto);
-            if (produtoParaExcluido == null){
-                throw new Exception();
-            }
-            entityManager.getTransaction().begin();
-            entityManager.remove(produtoParaExcluido);
-            entityManager.getTransaction().commit();
+        Produto produtoParaExcluido = entityManager.find(Produto.class, idDoProduto);
+        if (produtoParaExcluido == null) {
+            throw new Exception();
+        }
+        entityManager.getTransaction().begin();
+        entityManager.remove(produtoParaExcluido);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
 }

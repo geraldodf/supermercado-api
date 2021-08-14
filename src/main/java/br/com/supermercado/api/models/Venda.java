@@ -23,7 +23,6 @@ public class Venda {
 
     @ManyToOne
     @JoinColumn(name = "pessoafk")
-    @JsonbTransient
     private Pessoa pessoa;
 
     @ManyToMany

@@ -18,6 +18,7 @@ public class TipoPagamentosDAO {
         entityManager.getTransaction().begin();
         entityManager.persist(tipoPagamento);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     public List<TipoPagamento> pegarTodosTiposDePagamentos() {
@@ -34,11 +35,13 @@ public class TipoPagamentosDAO {
         entityManager.getTransaction().begin();
         entityManager.merge(retorno);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     public void excluirUmTipoPagamento(Long id) {
         entityManager.getTransaction().begin();
         entityManager.remove(entityManager.find(TipoPagamento.class, id));
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

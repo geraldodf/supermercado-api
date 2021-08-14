@@ -52,7 +52,7 @@ public class VendasService {
         pagamento = pagamentosDAO.pegarUmPagamento(relacaoVendaPagamentoDTO.getIdDoPagamento());
         venda = vendasDAO.pegarUmaVenda(relacaoVendaPagamentoDTO.getIdDaVenda());
         venda.setPagamento(pagamento);
-
+        vendasDAO.inserirUmPagamento(pagamento);
     }
 
     public Venda pegarUmaVenda(Long id) {

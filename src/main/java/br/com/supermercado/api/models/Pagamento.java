@@ -3,6 +3,7 @@ package br.com.supermercado.api.models;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Pagamento {
     private List<TipoPagamento> tipoPagamento;
 
     @OneToOne(mappedBy = "pagamento")
+    @JsonbTransient
     private Venda venda;
 
 

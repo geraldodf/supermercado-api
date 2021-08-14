@@ -19,16 +19,6 @@ public class Pessoa {
     @Column(name = "pessoa_cpf")
     private Long cpf;
 
-    @OneToMany(mappedBy = "pessoa")
-    private List<Venda> venda;
-
-    public List<Venda> getVenda() {
-        return venda;
-    }
-
-    public void setVenda(List<Venda> venda) {
-        this.venda = venda;
-    }
 
     public Long getId() {
         return id;

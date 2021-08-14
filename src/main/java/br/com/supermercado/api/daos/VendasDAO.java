@@ -22,6 +22,7 @@ public class VendasDAO {
         entityManager.getTransaction().begin();
         entityManager.persist(venda);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     public Pessoa atualizarComprador (Pessoa pessoa, Long id){
@@ -29,6 +30,7 @@ public class VendasDAO {
         entityManager.getTransaction().begin();
         entityManager.merge(compradorEncontrado);
         entityManager.getTransaction().commit();
+        entityManager.close();
         return pessoa;
     }
 
@@ -36,6 +38,7 @@ public class VendasDAO {
         entityManager.getTransaction().begin();
         entityManager.merge(pagamento);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     public Venda pegarUmaVenda(Long id) {

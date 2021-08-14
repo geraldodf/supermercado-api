@@ -22,6 +22,7 @@ public class PagamentosDAO {
         entityManager.getTransaction().begin();
         entityManager.persist(pagamento);
         entityManager.getTransaction().commit();
+        entityManager.close();
 
     }
 
@@ -33,5 +34,6 @@ public class PagamentosDAO {
         entityManager.getTransaction().begin();
         entityManager.remove(entityManager.find(Pagamento.class, id));
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

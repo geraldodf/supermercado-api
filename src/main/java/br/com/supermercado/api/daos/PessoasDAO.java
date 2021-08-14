@@ -28,6 +28,7 @@ public class PessoasDAO {
         entityManager.getTransaction().begin();
         entityManager.persist(pessoa);
         entityManager.getTransaction().commit();
+        entityManager.close();
         return pessoa;
 
     }
@@ -36,6 +37,7 @@ public class PessoasDAO {
         entityManager.getTransaction().begin();
         entityManager.persist(pessoa);
         entityManager.getTransaction().commit();
+        entityManager.close();
         return pessoa;
     }
 
@@ -43,6 +45,7 @@ public class PessoasDAO {
         entityManager.getTransaction().begin();
         entityManager.merge(pessoa);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
 
@@ -51,5 +54,6 @@ public class PessoasDAO {
         entityManager.getTransaction().begin();
         entityManager.remove(pessoaExcluir);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

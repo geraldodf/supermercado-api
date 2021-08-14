@@ -22,7 +22,6 @@ public class VendasResource {
     @POST
     public void criandoUmaVenda(CriacaoVendaDTO criacaoVendaDTO) {
         vendasService.criandoUmaVenda(criacaoVendaDTO);
-
     }
 
     @GET
