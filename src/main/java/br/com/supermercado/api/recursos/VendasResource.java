@@ -25,23 +25,21 @@ public class VendasResource {
     }
 
     @GET
-    public List<Venda> pegarTodasVendas(){
+    public List<Venda> pegarTodasVendas() {
         return vendasService.pegarTodasVendas();
     }
 
     @GET
     @Path("/{id}")
-    public Venda pegarUmaVenda(@PathParam("id")Long id){
+    public Venda pegarUmaVenda(@PathParam("id") Long id) {
         return vendasService.pegarUmaVenda(id);
     }
 
 
     @PUT
-    public void inserirUmPagamento(RelacaoVendaPagamentoDTO relacaoVendaPagamentoDTO){
+    public void inserirUmPagamento(RelacaoVendaPagamentoDTO relacaoVendaPagamentoDTO) {
         vendasService.inserirUmPagamento(relacaoVendaPagamentoDTO);
     }
-
-
 
 
 
