@@ -11,6 +11,7 @@
         <class>br.com.supermercado.api.models.Venda</class>
         <class>br.com.supermercado.api.models.TipoPagamento</class>
         <class>br.com.supermercado.api.models.Pagamento</class>
+        <class>br.com.supermercado.api.models.EstoqueDeProdutos</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>

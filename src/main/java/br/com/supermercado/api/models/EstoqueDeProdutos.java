@@ -14,7 +14,7 @@ public class EstoqueDeProdutos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "estoque_produtos")
+    @Column(name = "estoque_produtos_id")
     private Long id;
 
     @Column(name = "quantidade")
