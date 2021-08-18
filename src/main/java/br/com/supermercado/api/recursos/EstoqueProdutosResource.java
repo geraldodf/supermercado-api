@@ -1,15 +1,12 @@
 package br.com.supermercado.api.recursos;
 
-import br.com.supermercado.api.daos.EstoqueProdutosDAO;
-import br.com.supermercado.api.dtos.EstoqueDeProdutosDTO;
+import br.com.supermercado.api.dtos.AtualizarEstoqueProdutoDTO;
+import br.com.supermercado.api.dtos.CriacaoProdutoEstoqueDTO;
 import br.com.supermercado.api.models.EstoqueDeProdutos;
 import br.com.supermercado.api.services.EstoqueProdutosService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -25,9 +22,21 @@ public class EstoqueProdutosResource {
         return estoqueProdutosService.pegarTodosEstoques();
     }
 
+    @GET
+    @Path("/{id}")
+    public EstoqueDeProdutos pegarUmEstoque(@PathParam("id") Long id){
+        return estoqueProdutosService.pegarUmEstoque(id);
+    }
+
     @POST
-    public void adicionarEstoque(EstoqueDeProdutosDTO estoqueDeProdutosDTO){
-        estoqueProdutosService.adicionarEstoque(estoqueDeProdutosDTO);
+    public void adicionarProdutoNoEstoque(CriacaoProdutoEstoqueDTO criacaoProdutoEstoqueDTO){
+        estoqueProdutosService.adicionarProdutoNoEstoque(criacaoProdutoEstoqueDTO);
+    }
+
+    @PUT
+    @Path("/{id}")
+    public void atualizarProdutoEstoque(@PathParam("id") Long id, AtualizarEstoqueProdutoDTO atualizarEstoqueProdutoDTO){
+        estoqueProdutosService.atualizarProdutoEstoque(id, atualizarEstoqueProdutoDTO);
     }
 
 }

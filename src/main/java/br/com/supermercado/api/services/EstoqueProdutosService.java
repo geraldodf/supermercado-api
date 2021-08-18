@@ -1,9 +1,11 @@
 package br.com.supermercado.api.services;
 
 import br.com.supermercado.api.daos.EstoqueProdutosDAO;
-import br.com.supermercado.api.dtos.EstoqueDeProdutosDTO;
+import br.com.supermercado.api.dtos.AtualizarEstoqueProdutoDTO;
+import br.com.supermercado.api.dtos.CriacaoProdutoEstoqueDTO;
 import br.com.supermercado.api.models.EstoqueDeProdutos;
 import br.com.supermercado.api.models.Produto;
+import br.com.supermercado.api.recursos.EstoqueProdutosResource;
 import br.com.supermercado.api.recursos.ProdutosResource;
 
 import javax.inject.Inject;
@@ -15,23 +17,32 @@ public class EstoqueProdutosService {
     private EstoqueProdutosDAO estoqueProdutosDAO;
     @Inject
     private ProdutosResource produtosResource;
+    @Inject
+    private EstoqueProdutosResource estoqueProdutosResource;
 
     public List<EstoqueDeProdutos> pegarTodosEstoques() {
         return (List<EstoqueDeProdutos>) estoqueProdutosDAO.pegarTodosEstoques();
     }
 
-    public void adicionarEstoque(EstoqueDeProdutosDTO estoqueDeProdutosDTO) {
+    public void adicionarProdutoNoEstoque(CriacaoProdutoEstoqueDTO criacaoProdutoEstoqueDTO) {
         EstoqueDeProdutos estoqueDeProdutos = new EstoqueDeProdutos();
 
-        Long idDoProduto =  estoqueDeProdutosDTO.getIdDoProduto();
+        estoqueDeProdutos.setProduto(produtosResource.pegarUmProduto(criacaoProdutoEstoqueDTO.getIdDoProduto()));
 
-        Produto produto = new Produto();
-        produto = produtosResource.pegarUmProduto(idDoProduto);
-        estoqueDeProdutos.setProduto(produto);
+        estoqueDeProdutos.setQuantidade(criacaoProdutoEstoqueDTO.getQuantidade());
 
-        Long quantidade = estoqueDeProdutosDTO.getQuantidade();
-        estoqueDeProdutos.setQuantidade(quantidade);
+        estoqueProdutosDAO.adicionarProdutoNoEstoque(estoqueDeProdutos);
+    }
 
-        estoqueProdutosDAO.adicionarEstoque(estoqueDeProdutos);
+    public void atualizarProdutoEstoque(Long id, AtualizarEstoqueProdutoDTO atualizarEstoqueProdutoDTO) {
+        EstoqueDeProdutos estoqueDeProdutos = estoqueProdutosDAO.pegarUmEstoque(id);
+        estoqueDeProdutos.setQuantidade(atualizarEstoqueProdutoDTO.getNovaQuantidade());
+
+
+        estoqueProdutosDAO.atualizarUmProduto(estoqueDeProdutos);
+    }
+
+    public EstoqueDeProdutos pegarUmEstoque(Long id) {
+        return estoqueProdutosDAO.pegarUmEstoque(id);
     }
 }

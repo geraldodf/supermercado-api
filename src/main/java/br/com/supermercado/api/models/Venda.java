@@ -26,7 +26,7 @@ public class Venda {
 
     @ManyToMany
     @JoinTable(name = "relacao_vendas_produtos", joinColumns = @JoinColumn(name = "venda_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
-    private List<Produto> produto;
+    private List<Produto> produtos;
 
     @OneToOne
     @JoinColumn(name = "pagamentofk")

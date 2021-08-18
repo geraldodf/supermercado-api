@@ -1,15 +1,10 @@
 package br.com.supermercado.api.services;
 
-import br.com.supermercado.api.daos.PagamentosDAO;
-import br.com.supermercado.api.daos.PessoasDAO;
-import br.com.supermercado.api.daos.ProdutosDAO;
-import br.com.supermercado.api.daos.VendasDAO;
+import br.com.supermercado.api.daos.*;
 import br.com.supermercado.api.dtos.CriacaoVendaDTO;
+import br.com.supermercado.api.dtos.ProdutoASerVendidoDTO;
 import br.com.supermercado.api.dtos.RelacaoVendaPagamentoDTO;
-import br.com.supermercado.api.models.Pagamento;
-import br.com.supermercado.api.models.Pessoa;
-import br.com.supermercado.api.models.Produto;
-import br.com.supermercado.api.models.Venda;
+import br.com.supermercado.api.models.*;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -25,6 +20,8 @@ public class VendasService {
     private PessoasDAO pessoasDAO;
     @Inject
     private PagamentosDAO pagamentosDAO;
+    @Inject
+    private EstoqueProdutosDAO estoqueProdutosDAO;
 
     public void criandoUmaVenda(CriacaoVendaDTO criacaoVendaDTO) {
         Venda venda = new Venda();
@@ -32,10 +29,13 @@ public class VendasService {
 
         List<Produto> listaProdutos = new ArrayList<>();
 
-        criacaoVendaDTO.getIdListaProdutoVenda().forEach(id -> {
-            listaProdutos.add(produtosDAO.pegarUmProduto(id));
+        List<ProdutoASerVendidoDTO> produtoASerVendidoDTO = criacaoVendaDTO.getListaDeProdutosASerVendido();
+
+        produtoASerVendidoDTO.forEach(produtoASerVendido -> {
+            listaProdutos.add(produtosDAO.pegarUmProduto(produtoASerVendido.getIdDoProduto()));
         });
-        venda.setProduto(listaProdutos);
+
+        venda.setProdutos(listaProdutos);
         venda.setPessoa(pessoasDAO.pegarUmaPessoa(criacaoVendaDTO.getIdPessoaVenda()));
 
         vendasDAO.criarUmaVenda(venda);
@@ -52,6 +52,15 @@ public class VendasService {
         pagamento = pagamentosDAO.pegarUmPagamento(relacaoVendaPagamentoDTO.getIdDoPagamento());
         venda = vendasDAO.pegarUmaVenda(relacaoVendaPagamentoDTO.getIdDaVenda());
         venda.setPagamento(pagamento);
+
+        List<Produto> produtos = venda.getProdutos();
+        int i = 0;
+        Produto retorno = produtos.get(i);
+        EstoqueDeProdutos estoqueDeProdutos = estoqueProdutosDAO.pegarUmEstoquePeloIdDoProduto(retorno.getId());
+
+        Long quantidade = estoqueDeProdutos.getQuantidade();
+        quantidade = (quantidade - 1);
+
         vendasDAO.inserirUmPagamento(pagamento);
     }
 
