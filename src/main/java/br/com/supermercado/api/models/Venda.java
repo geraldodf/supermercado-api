@@ -24,13 +24,16 @@ public class Venda {
     @JoinColumn(name = "pessoafk")
     private Pessoa pessoa;
 
-    @ManyToMany
+   /* @ManyToMany
     @JoinTable(name = "relacao_vendas_produtos", joinColumns = @JoinColumn(name = "venda_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
-    private List<Produto> produtos;
+    private List<Produto> produtos;*/
 
     @OneToOne
     @JoinColumn(name = "pagamentofk")
     private Pagamento pagamento;
+
+    @OneToMany(mappedBy = "venda")
+    private List<RelacaoVendaProduto> relacaoVendaProdutos;
 
 
 

@@ -18,11 +18,12 @@ public class VendasDAO {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 
-    public void criarUmaVenda(Venda venda){
+    public Venda criarUmaVenda(Venda venda){
         entityManager.getTransaction().begin();
         entityManager.persist(venda);
         entityManager.getTransaction().commit();
         entityManager.close();
+        return venda;
     }
 
     public Pessoa atualizarComprador (Pessoa pessoa, Long id){

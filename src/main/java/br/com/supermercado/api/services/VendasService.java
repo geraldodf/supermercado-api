@@ -24,21 +24,26 @@ public class VendasService {
     private EstoqueProdutosDAO estoqueProdutosDAO;
 
     public void criandoUmaVenda(CriacaoVendaDTO criacaoVendaDTO) {
+        criacaoVendaDTO.getDataVenda();
         Venda venda = new Venda();
+        Long idPessoaVenda = criacaoVendaDTO.getIdPessoaVenda();
+        List<ProdutoASerVendidoDTO> listaDeProdutoASerVendido = criacaoVendaDTO.getListaDeProdutosASerVendido();
+        List<RelacaoVendaProduto> relacaoVendaProdutos = new ArrayList<>();
+
         venda.setData(criacaoVendaDTO.getDataVenda());
-
-        List<Produto> listaProdutos = new ArrayList<>();
-
-        List<ProdutoASerVendidoDTO> produtoASerVendidoDTO = criacaoVendaDTO.getListaDeProdutosASerVendido();
-
-        produtoASerVendidoDTO.forEach(produtoASerVendido -> {
-            listaProdutos.add(produtosDAO.pegarUmProduto(produtoASerVendido.getIdDoProduto()));
-        });
-
-        venda.setProdutos(listaProdutos);
         venda.setPessoa(pessoasDAO.pegarUmaPessoa(criacaoVendaDTO.getIdPessoaVenda()));
 
-        vendasDAO.criarUmaVenda(venda);
+        venda = vendasDAO.criarUmaVenda(venda);
+
+        listaDeProdutoASerVendido.forEach(produto -> {
+            Long idProduto = produto.getIdDoProduto();
+            Long quantidade = produto.getQuantidadeProdutoASerVendido();
+            Produto produtoRetorno = produtosDAO.pegarUmProduto(idProduto);
+            RelacaoVendaProduto relacaoVendaProduto = new RelacaoVendaProduto();
+
+        });
+
+
     }
 
     public Pessoa atualizandoComprador(Pessoa pessoa, Long id) {
