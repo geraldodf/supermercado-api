@@ -1,0 +1,14 @@
+br\com\supermercado\api\services\VendasService.class
+br\com\supermercado\api\recursos\ProdutosResource.class
+br\com\supermercado\api\services\ProdutosService.class
+br\com\supermercado\api\services\PessoasService.class
+br\com\supermercado\api\models\Produto.class
+br\com\supermercado\api\daos\ProdutosDAO.class
+br\com\supermercado\api\utilitarios\ConstraintViolationMapper.class
+br\com\supermercado\api\models\Venda.class
+br\com\supermercado\api\Aplicacao.class
+br\com\supermercado\api\daos\VendasDAO.class
+br\com\supermercado\api\daos\PessoasDAO.class
+br\com\supermercado\api\recursos\PessoasResourse.class
+br\com\supermercado\api\recursos\VendasResource.class
+br\com\supermercado\api\models\Pessoa.class
