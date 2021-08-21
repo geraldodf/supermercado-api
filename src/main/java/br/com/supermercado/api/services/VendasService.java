@@ -33,16 +33,23 @@ public class VendasService {
         venda.setData(criacaoVendaDTO.getDataVenda());
         venda.setPessoa(pessoasDAO.pegarUmaPessoa(criacaoVendaDTO.getIdPessoaVenda()));
 
-        venda = vendasDAO.criarUmaVenda(venda);
+        venda = vendasDAO.criarVendaComTransacaoAberta(venda);
 
+        Venda finalVenda = venda;
         listaDeProdutoASerVendido.forEach(produto -> {
             Long idProduto = produto.getIdDoProduto();
             Long quantidade = produto.getQuantidadeProdutoASerVendido();
             Produto produtoRetorno = produtosDAO.pegarUmProduto(idProduto);
+
             RelacaoVendaProduto relacaoVendaProduto = new RelacaoVendaProduto();
+            relacaoVendaProduto.setVenda(finalVenda);
+            relacaoVendaProduto.setProduto(produtoRetorno);
+            relacaoVendaProduto.setQuantidade(quantidade);
 
+            relacaoVendaProdutos.add(relacaoVendaProduto);
         });
-
+        venda.setRelacaoVendaProdutos(relacaoVendaProdutos);
+        vendasDAO.atualizarAVendaSemAbrirTransacao(venda);
 
     }
 
@@ -50,6 +57,9 @@ public class VendasService {
         return vendasDAO.atualizarComprador(pessoa, id);
     }
 
+    public void atualizarProdutosASerVendidoEEstoqueDaVenda(ProdutoASerVendidoDTO produtoASerVendidoDTO){
+
+    }
 
     public void inserirUmPagamento(RelacaoVendaPagamentoDTO relacaoVendaPagamentoDTO) {
         Pagamento pagamento = new Pagamento();
@@ -58,7 +68,7 @@ public class VendasService {
         venda = vendasDAO.pegarUmaVenda(relacaoVendaPagamentoDTO.getIdDaVenda());
         venda.setPagamento(pagamento);
 
-        List<Produto> produtos = venda.getProdutos();
+        List<Produto> produtos = null;
         int i = 0;
         Produto retorno = produtos.get(i);
         EstoqueDeProdutos estoqueDeProdutos = estoqueProdutosDAO.pegarUmEstoquePeloIdDoProduto(retorno.getId());

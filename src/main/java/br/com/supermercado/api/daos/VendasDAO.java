@@ -18,7 +18,7 @@ public class VendasDAO {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 
-    public Venda criarUmaVenda(Venda venda){
+    public Venda criarUmaVenda(Venda venda) {
         entityManager.getTransaction().begin();
         entityManager.persist(venda);
         entityManager.getTransaction().commit();
@@ -26,7 +26,7 @@ public class VendasDAO {
         return venda;
     }
 
-    public Pessoa atualizarComprador (Pessoa pessoa, Long id){
+    public Pessoa atualizarComprador(Pessoa pessoa, Long id) {
         Pessoa compradorEncontrado = entityManager.find(Pessoa.class, id);
         entityManager.getTransaction().begin();
         entityManager.merge(compradorEncontrado);
@@ -48,5 +48,20 @@ public class VendasDAO {
 
     public List<Venda> pegarTodasVendas() {
         return (List<Venda>) entityManager.createQuery("From Venda").getResultList();
+    }
+
+    public Venda criarVendaComTransacaoAberta(Venda venda) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(venda);
+        entityManager.getTransaction().commit();
+        return venda;
+    }
+
+
+    public void atualizarAVendaSemAbrirTransacao(Venda venda) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(venda);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }
