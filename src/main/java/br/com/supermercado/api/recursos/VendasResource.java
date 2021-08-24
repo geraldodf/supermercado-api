@@ -38,7 +38,7 @@ public class VendasResource {
 
 
     @PUT
-    public void inserirUmPagamento(RelacaoVendaPagamentoDTO relacaoVendaPagamentoDTO) {
+    public void inserirUmPagamento(RelacaoVendaPagamentoDTO relacaoVendaPagamentoDTO) throws Exception {
         vendasService.inserirUmPagamento(relacaoVendaPagamentoDTO);
     }
 

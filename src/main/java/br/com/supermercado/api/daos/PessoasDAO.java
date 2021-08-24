@@ -5,7 +5,9 @@ import br.com.supermercado.api.models.Pessoa;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PessoasDAO {
 
@@ -41,7 +43,7 @@ public class PessoasDAO {
         return pessoa;
     }
 
-    public void atualizarUmaPessoa( Pessoa pessoa) {
+    public void atualizarUmaPessoa(Pessoa pessoa) {
         entityManager.getTransaction().begin();
         entityManager.merge(pessoa);
         entityManager.getTransaction().commit();
@@ -55,5 +57,15 @@ public class PessoasDAO {
         entityManager.remove(pessoaExcluir);
         entityManager.getTransaction().commit();
         entityManager.close();
+    }
+
+    public List<Pessoa> pesquisarPessoaPeloNome(String nome) {
+        Query query = entityManager.createQuery("select p from Pessoa p where p.nome like: nome");
+        return (ArrayList<Pessoa>) query.setParameter("nome", "%" + nome + "%").getResultList();
+    }
+
+    public List<Pessoa> pesquisarPessoaPeloCpf(Long cpf) {
+        Query query = entityManager.createQuery("select p from Pessoa p where CAST (p.cpf AS string) like: cpf");
+        return (ArrayList<Pessoa>) query.setParameter("cpf", cpf.toString()).getResultList();
     }
 }

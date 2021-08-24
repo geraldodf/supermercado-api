@@ -9,6 +9,7 @@ import br.com.supermercado.api.models.*;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class VendasService {
 
@@ -22,6 +23,7 @@ public class VendasService {
     private PagamentosDAO pagamentosDAO;
     @Inject
     private EstoqueProdutosDAO estoqueProdutosDAO;
+
 
     public void criandoUmaVenda(CriacaoVendaDTO criacaoVendaDTO) {
         criacaoVendaDTO.getDataVenda();
@@ -66,7 +68,8 @@ public class VendasService {
 
     }
 
-    public void inserirUmPagamento(RelacaoVendaPagamentoDTO relacaoVendaPagamentoDTO) {
+
+    public void inserirUmPagamento(RelacaoVendaPagamentoDTO relacaoVendaPagamentoDTO) throws Exception {
         Pagamento pagamento = new Pagamento();
         Venda venda = new Venda();
         pagamento = pagamentosDAO.pegarUmPagamento(relacaoVendaPagamentoDTO.getIdDoPagamento());
@@ -75,26 +78,15 @@ public class VendasService {
 
         List<RelacaoVendaProduto> listaRelacaoVendaProduto = venda.getRelacaoVendaProdutos();
 
-        Double precoTotalAPagar;
+        Double precoTotal = listaRelacaoVendaProduto.parallelStream().map(p -> p.getProduto().getPreco()).reduce(0.0, Double::sum);
+        Double valorPago = pagamento.getPrecoAPagar();
 
-        listaRelacaoVendaProduto.forEach(produtos -> {
-            Produto produto = produtos.getProduto();
-            Double precoProduto = produto.getPreco();
-            precoTotalAPagar = precoProduto + precoTotalAPagar;
+        if (valorPago >= precoTotal) {
+            vendasDAO.inserirUmPagamento(pagamento);
+        } else {
+            throw new Exception("Pagamento inferior ao valor total.");
+        }
 
-
-
-        });
-
-        List<Produto> produtos = null;
-        int i = 0;
-        Produto retorno = produtos.get(i);
-        EstoqueDeProdutos estoqueDeProdutos = estoqueProdutosDAO.pegarUmEstoquePeloIdDoProduto(retorno.getId());
-
-        Long quantidade = estoqueDeProdutos.getQuantidade();
-        quantidade = (quantidade - 1);
-
-        vendasDAO.inserirUmPagamento(pagamento);
     }
 
     public Venda pegarUmaVenda(Long id) {

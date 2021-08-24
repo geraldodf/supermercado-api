@@ -5,6 +5,7 @@ import br.com.supermercado.api.models.Pessoa;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PessoasService {
 
@@ -32,5 +33,13 @@ public class PessoasService {
 
     public void excluirUmaPessoa(Long id) {
         pessoasDAO.excluirUmaPessoa(id);
+    }
+
+    public List<Pessoa> pesquisarPessoaPeloNome(String nome) {
+        return pessoasDAO.pesquisarPessoaPeloNome(nome);
+    }
+
+    public List<Pessoa> pesquisarPessoaPeloCpf(Long cpf) {
+        return pessoasDAO.pesquisarPessoaPeloCpf(cpf);
     }
 }

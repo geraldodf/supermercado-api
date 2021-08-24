@@ -32,7 +32,7 @@ public class Venda {
     @JoinColumn(name = "pagamentofk")
     private Pagamento pagamento;
 
-    @OneToMany(mappedBy = "venda")
+    @OneToMany(mappedBy = "venda", fetch = FetchType.LAZY)
     private List<RelacaoVendaProduto> relacaoVendaProdutos;
 
 

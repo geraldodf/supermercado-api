@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.List;
 
 @Path("/pessoas")
 @Produces(MediaType.APPLICATION_JSON)
@@ -19,6 +20,18 @@ public class PessoasResourse {
     @POST
     public Pessoa criarUmaPessoa(Pessoa pessoa) {
         return pessoasServices.adicionarUmaPessoa(pessoa);
+    }
+
+    @GET
+    @Path("/query/nome-pessoa")
+    public List<Pessoa> pesquisarPessoaPeloNome(@QueryParam("nome")String nome){
+        return pessoasServices.pesquisarPessoaPeloNome(nome);
+    }
+
+    @GET
+    @Path("/query/cpf-pessoa")
+    public List<Pessoa> pesquisarPessoaPeloCpf(@QueryParam("cpf")Long cpf){
+        return pessoasServices.pesquisarPessoaPeloCpf(cpf);
     }
 
     @GET
