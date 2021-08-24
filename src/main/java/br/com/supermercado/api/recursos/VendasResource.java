@@ -29,6 +29,7 @@ public class VendasResource {
         return vendasService.pegarTodasVendas();
     }
 
+
     @GET
     @Path("/{id}")
     public Venda pegarUmaVenda(@PathParam("id") Long id) {

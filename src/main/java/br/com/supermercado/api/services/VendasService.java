@@ -27,13 +27,16 @@ public class VendasService {
         criacaoVendaDTO.getDataVenda();
         Venda venda = new Venda();
         Long idPessoaVenda = criacaoVendaDTO.getIdPessoaVenda();
+
         List<ProdutoASerVendidoDTO> listaDeProdutoASerVendido = criacaoVendaDTO.getListaDeProdutosASerVendido();
+
         List<RelacaoVendaProduto> relacaoVendaProdutos = new ArrayList<>();
 
         venda.setData(criacaoVendaDTO.getDataVenda());
         venda.setPessoa(pessoasDAO.pegarUmaPessoa(criacaoVendaDTO.getIdPessoaVenda()));
 
         venda = vendasDAO.criarVendaComTransacaoAberta(venda);
+
 
         Venda finalVenda = venda;
         listaDeProdutoASerVendido.forEach(produto -> {
@@ -48,7 +51,9 @@ public class VendasService {
 
             relacaoVendaProdutos.add(relacaoVendaProduto);
         });
+
         venda.setRelacaoVendaProdutos(relacaoVendaProdutos);
+
         vendasDAO.atualizarAVendaSemAbrirTransacao(venda);
 
     }
@@ -57,7 +62,7 @@ public class VendasService {
         return vendasDAO.atualizarComprador(pessoa, id);
     }
 
-    public void atualizarProdutosASerVendidoEEstoqueDaVenda(ProdutoASerVendidoDTO produtoASerVendidoDTO){
+    public void atualizarProdutosASerVendidoEEstoqueDaVenda(ProdutoASerVendidoDTO produtoASerVendidoDTO) {
 
     }
 
@@ -67,6 +72,19 @@ public class VendasService {
         pagamento = pagamentosDAO.pegarUmPagamento(relacaoVendaPagamentoDTO.getIdDoPagamento());
         venda = vendasDAO.pegarUmaVenda(relacaoVendaPagamentoDTO.getIdDaVenda());
         venda.setPagamento(pagamento);
+
+        List<RelacaoVendaProduto> listaRelacaoVendaProduto = venda.getRelacaoVendaProdutos();
+
+        Double precoTotalAPagar;
+
+        listaRelacaoVendaProduto.forEach(produtos -> {
+            Produto produto = produtos.getProduto();
+            Double precoProduto = produto.getPreco();
+            precoTotalAPagar = precoProduto + precoTotalAPagar;
+
+
+
+        });
 
         List<Produto> produtos = null;
         int i = 0;
