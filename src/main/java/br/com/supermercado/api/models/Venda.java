@@ -24,6 +24,9 @@ public class Venda {
     @JoinColumn(name = "pessoafk")
     private Pessoa pessoa;
 
+    @Column(name = "valor_a_pagar")
+    private Double valorAPagar;
+
    /* @ManyToMany
     @JoinTable(name = "relacao_vendas_produtos", joinColumns = @JoinColumn(name = "venda_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Produto> produtos;*/

@@ -40,12 +40,13 @@ public class VendasService {
         venda = vendasDAO.criarVendaComTransacaoAberta(venda);
 
 
+
         Venda finalVenda = venda;
         listaDeProdutoASerVendido.forEach(produto -> {
             Long idProduto = produto.getIdDoProduto();
             Long quantidade = produto.getQuantidadeProdutoASerVendido();
             Produto produtoRetorno = produtosDAO.pegarUmProduto(idProduto);
-
+            produtoRetorno.getPreco();
             RelacaoVendaProduto relacaoVendaProduto = new RelacaoVendaProduto();
             relacaoVendaProduto.setVenda(finalVenda);
             relacaoVendaProduto.setProduto(produtoRetorno);
@@ -54,8 +55,11 @@ public class VendasService {
             relacaoVendaProdutos.add(relacaoVendaProduto);
         });
 
-        venda.setRelacaoVendaProdutos(relacaoVendaProdutos);
 
+        Double precoTotal = relacaoVendaProdutos.parallelStream().map(p -> p.getProduto().getPreco()).reduce(0.0, Double::sum);
+
+        venda.setRelacaoVendaProdutos(relacaoVendaProdutos);
+        venda.setValorAPagar(precoTotal);
         vendasDAO.atualizarAVendaSemAbrirTransacao(venda);
 
     }
