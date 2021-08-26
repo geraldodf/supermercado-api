@@ -23,7 +23,7 @@ public class Produto {
     @Column(name = "produto_preco")
     private Double preco;
 
-    @OneToMany(mappedBy = "produto")
+    @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RelacaoVendaProduto> relacaoVendaProdutos;
 
 

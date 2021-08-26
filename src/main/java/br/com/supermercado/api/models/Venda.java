@@ -35,7 +35,7 @@ public class Venda {
     @JoinColumn(name = "pagamentofk")
     private Pagamento pagamento;
 
-    @OneToMany(mappedBy = "venda", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "venda", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RelacaoVendaProduto> relacaoVendaProdutos;
 
 

@@ -7,7 +7,6 @@ import br.com.supermercado.api.models.Pagamento;
 import br.com.supermercado.api.models.TipoPagamento;
 
 import javax.inject.Inject;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

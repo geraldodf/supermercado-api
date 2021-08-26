@@ -21,7 +21,7 @@ public class EstoqueProdutosService {
     private EstoqueProdutosResource estoqueProdutosResource;
 
     public List<EstoqueDeProdutos> pegarTodosEstoques() {
-        return (List<EstoqueDeProdutos>) estoqueProdutosDAO.pegarTodosEstoques();
+        return estoqueProdutosDAO.pegarTodosEstoques();
     }
 
     public void adicionarProdutoNoEstoque(CriacaoProdutoEstoqueDTO criacaoProdutoEstoqueDTO) {
@@ -37,7 +37,6 @@ public class EstoqueProdutosService {
     public void atualizarProdutoEstoque(Long id, AtualizarEstoqueProdutoDTO atualizarEstoqueProdutoDTO) {
         EstoqueDeProdutos estoqueDeProdutos = estoqueProdutosDAO.pegarUmEstoque(id);
         estoqueDeProdutos.setQuantidade(atualizarEstoqueProdutoDTO.getNovaQuantidade());
-
 
         estoqueProdutosDAO.atualizarUmProduto(estoqueDeProdutos);
     }

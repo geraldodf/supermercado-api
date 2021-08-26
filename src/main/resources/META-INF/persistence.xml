@@ -13,7 +13,6 @@
         <class>br.com.supermercado.api.models.Pagamento</class>
         <class>br.com.supermercado.api.models.EstoqueDeProdutos</class>
         <class>br.com.supermercado.api.models.RelacaoVendaProduto</class>
-        <class>br.com.supermercado.api.models.RelacaoVendaProdutoId</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>

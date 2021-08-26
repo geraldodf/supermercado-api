@@ -5,12 +5,14 @@ import br.com.supermercado.api.dtos.CriacaoVendaDTO;
 import br.com.supermercado.api.dtos.ProdutoASerVendidoDTO;
 import br.com.supermercado.api.dtos.RelacaoVendaPagamentoDTO;
 import br.com.supermercado.api.models.*;
+import br.com.supermercado.api.utilitarios.NotificadorDeVenda;
 
+import javax.ejb.Singleton;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
+@Singleton
 public class VendasService {
 
     @Inject
@@ -22,44 +24,29 @@ public class VendasService {
     @Inject
     private PagamentosDAO pagamentosDAO;
     @Inject
-    private EstoqueProdutosDAO estoqueProdutosDAO;
+    private NotificadorDeVenda notificadorDeVenda;
+
 
 
     public void criandoUmaVenda(CriacaoVendaDTO criacaoVendaDTO) {
-        criacaoVendaDTO.getDataVenda();
         Venda venda = new Venda();
-        Long idPessoaVenda = criacaoVendaDTO.getIdPessoaVenda();
-
         List<ProdutoASerVendidoDTO> listaDeProdutoASerVendido = criacaoVendaDTO.getListaDeProdutosASerVendido();
-
         List<RelacaoVendaProduto> relacaoVendaProdutos = new ArrayList<>();
-
         venda.setData(criacaoVendaDTO.getDataVenda());
         venda.setPessoa(pessoasDAO.pegarUmaPessoa(criacaoVendaDTO.getIdPessoaVenda()));
-
         venda = vendasDAO.criarVendaComTransacaoAberta(venda);
-
-
 
         Venda finalVenda = venda;
         listaDeProdutoASerVendido.forEach(produto -> {
-            Long idProduto = produto.getIdDoProduto();
-            Long quantidade = produto.getQuantidadeProdutoASerVendido();
-            Produto produtoRetorno = produtosDAO.pegarUmProduto(idProduto);
-            produtoRetorno.getPreco();
             RelacaoVendaProduto relacaoVendaProduto = new RelacaoVendaProduto();
             relacaoVendaProduto.setVenda(finalVenda);
-            relacaoVendaProduto.setProduto(produtoRetorno);
-            relacaoVendaProduto.setQuantidade(quantidade);
-
+            relacaoVendaProduto.setProduto(produtosDAO.pegarUmProduto(produto.getIdDoProduto()));
+            relacaoVendaProduto.setQuantidade(produto.getQuantidadeProdutoASerVendido());
             relacaoVendaProdutos.add(relacaoVendaProduto);
         });
-
-
-        Double precoTotal = relacaoVendaProdutos.parallelStream().map(p -> p.getProduto().getPreco()).reduce(0.0, Double::sum);
-
+        Double valorTotal = relacaoVendaProdutos.parallelStream().map(p -> p.getProduto().getPreco()).reduce(0.0, Double::sum);
         venda.setRelacaoVendaProdutos(relacaoVendaProdutos);
-        venda.setValorAPagar(precoTotal);
+        venda.setValorAPagar(valorTotal);
         vendasDAO.atualizarAVendaSemAbrirTransacao(venda);
 
     }
@@ -74,19 +61,14 @@ public class VendasService {
 
 
     public void inserirUmPagamento(RelacaoVendaPagamentoDTO relacaoVendaPagamentoDTO) throws Exception {
-        Pagamento pagamento = new Pagamento();
-        Venda venda = new Venda();
-        pagamento = pagamentosDAO.pegarUmPagamento(relacaoVendaPagamentoDTO.getIdDoPagamento());
-        venda = vendasDAO.pegarUmaVenda(relacaoVendaPagamentoDTO.getIdDaVenda());
+        Pagamento pagamento = pagamentosDAO.pegarUmPagamento(relacaoVendaPagamentoDTO.getIdDoPagamento());
+        Venda venda = vendasDAO.pegarUmaVenda(relacaoVendaPagamentoDTO.getIdDaVenda());
         venda.setPagamento(pagamento);
-
         List<RelacaoVendaProduto> listaRelacaoVendaProduto = venda.getRelacaoVendaProdutos();
 
-        Double precoTotal = listaRelacaoVendaProduto.parallelStream().map(p -> p.getProduto().getPreco()).reduce(0.0, Double::sum);
-        Double valorPago = pagamento.getPrecoAPagar();
-
-        if (valorPago >= precoTotal) {
+        if (pagamento.getPrecoAPagar() >= listaRelacaoVendaProduto.parallelStream().map(p -> p.getProduto().getPreco()).reduce(0.0, Double::sum)) {
             vendasDAO.inserirUmPagamento(pagamento);
+            notificadorDeVenda.enviarSms();
         } else {
             throw new Exception("Pagamento inferior ao valor total.");
         }
